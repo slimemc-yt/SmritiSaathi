@@ -1,0 +1,7 @@
+# Gemini API Key
+# Get your free API key from: https://makersuite.google.com/app/apikey
+# Free tier: 60 requests per minute, 1 million tokens per minute
+GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
+
+# Firebase (auto-generated, do not edit)
+sdk.dir=C\:\\Users\\Aanshumaan\\AppData\\Local\\Android\\Sdk

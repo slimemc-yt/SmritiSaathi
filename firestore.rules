@@ -1,0 +1,81 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // User collection:
+    // - Authenticated users can read users (for profile fetch & doctor directory search)
+    // - Users can write only their own profile
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Doctor-Patient Assignment Requests:
+    // - Authenticated users (families and doctors) can read and manage assignment requests
+    match /doctorPatientRequests/{requestId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Patients collection:
+    // - Allow reading by pairing code (for device pairing) - pairing code is a 6-digit secret
+    // - Authenticated users can create patients
+    // - Family members who created the patient, assigned doctors, or paired devices can read/update
+    match /patients/{patientId} {
+      // Allow read if: authenticated AND (creator OR doctor OR paired device)
+      // OR if querying by pairing code (unauthenticated but pairing code is secret)
+      allow read: if (request.auth != null && (
+        resource.data.createdBy == request.auth.uid ||
+        resource.data.assignedDoctorId == request.auth.uid ||
+        resource.data.pairedDeviceId == request.auth.uid
+      )) || 
+      // Allow unauthenticated read for pairing (pairingCode field exists and is being queried)
+      (resource.data.pairingCode != null && resource.data.pairingCode != "");
+      
+      allow create: if request.auth != null;
+      
+      allow update: if request.auth != null && (
+        resource.data.createdBy == request.auth.uid ||
+        resource.data.assignedDoctorId == request.auth.uid ||
+        resource.data.pairedDeviceId == request.auth.uid
+      );
+      
+      allow delete: if request.auth != null && resource.data.createdBy == request.auth.uid;
+
+      // Patient subcollections: Allow access to creator, assigned doctor, and paired device
+      match /{subcollection=**} {
+        allow read, write: if request.auth != null && (
+          get(/databases/$(database)/documents/patients/$(patientId)).data.createdBy == request.auth.uid ||
+          get(/databases/$(database)/documents/patients/$(patientId)).data.assignedDoctorId == request.auth.uid ||
+          get(/databases/$(database)/documents/patients/$(patientId)).data.pairedDeviceId == request.auth.uid
+        );
+      }
+    }
+
+    // Hospitals collection:
+    // - Authenticated users can read (search) and add custom hospitals
+    match /hospitals/{hospitalId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null;
+    }
+
+    // Doctors collection:
+    // - Authenticated users can read (search) and add custom doctors
+    match /doctors/{doctorId} {
+      allow read, write: if request.auth != null;
+      match /{subcollection=**} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Doctor Codes directory:
+    // - Authenticated users can read and register unique Doctor Codes for instant search
+    match /doctorCodes/{code} {
+      allow read, write: if request.auth != null;
+      match /{subcollection=**} {
+        allow read, write: if request.auth != null;
+      }
+    }
+  }
+}

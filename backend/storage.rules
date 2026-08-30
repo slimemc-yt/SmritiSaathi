@@ -1,0 +1,42 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper function: Check if user is linked family member
+    function isLinkedFamilyMember(patientId) {
+      return firestore.exists(/databases/(default)/documents/patients/$(patientId)/familyLinks/$(request.auth.uid));
+    }
+
+    // Helper function: Check if user is patient
+    function isPatient(patientId) {
+      let userDoc = firestore.get(/databases/(default)/documents/users/$(request.auth.uid));
+      return userDoc != null && userDoc.data.role == 'patient' && userDoc.data.linkedPatientIds.hasAny([patientId]);
+    }
+
+    // Helper function: Check family write access
+    function hasFamilyWriteAccess(patientId) {
+      let familyLink = firestore.get(/databases/(default)/documents/patients/$(patientId)/familyLinks/$(request.auth.uid));
+      return familyLink != null && familyLink.data.permissionLevel in ['write', 'admin'];
+    }
+
+    // Patient uploads folder: photos, voice notes, medical reports
+    match /patients/{patientId}/{allPaths=**} {
+      // Patient can read their own files
+      allow read: if isPatient(patientId) || isLinkedFamilyMember(patientId);
+
+      // Family with write access can upload
+      allow write: if hasFamilyWriteAccess(patientId);
+
+      // Medical reports - doctors can read
+      match /medicalReports/{fileName} {
+        allow read: if isLinkedFamilyMember(patientId);
+      }
+    }
+
+    // Reminiscence content uploads
+    match /reminiscence/{patientId}/{contentId} {
+      allow read: if isPatient(patientId) || isLinkedFamilyMember(patientId);
+      allow write: if hasFamilyWriteAccess(patientId);
+    }
+  }
+}

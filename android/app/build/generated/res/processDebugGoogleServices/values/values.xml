@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">1070465757550-t9s39te5db8omoqkmcgd5m19gkvmlukq.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">1070465757550</string>
+    <string name="google_api_key" translatable="false">AIzaSyAAtByggjeLhKAbj7amRY0TLIOirLlIExc</string>
+    <string name="google_app_id" translatable="false">1:1070465757550:android:543942f3b92e247fa8517f</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAAtByggjeLhKAbj7amRY0TLIOirLlIExc</string>
+    <string name="google_storage_bucket" translatable="false">dementia-6e49e.firebasestorage.app</string>
+    <string name="project_id" translatable="false">dementia-6e49e</string>
+</resources>

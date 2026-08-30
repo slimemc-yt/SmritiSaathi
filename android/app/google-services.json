@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1070465757550",
+    "project_id": "dementia-6e49e",
+    "storage_bucket": "dementia-6e49e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070465757550:android:543942f3b92e247fa8517f",
+        "android_client_info": {
+          "package_name": "com.socklet.smritisaathi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1070465757550-u76b2q2jc4fd9daho9n5m8i88qombd5g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.socklet.smritisaathi",
+            "certificate_hash": "0fc5ea89c35acf6e484999c835087ccae3eceeec"
+          }
+        },
+        {
+          "client_id": "1070465757550-t9s39te5db8omoqkmcgd5m19gkvmlukq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAtByggjeLhKAbj7amRY0TLIOirLlIExc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1070465757550-t9s39te5db8omoqkmcgd5m19gkvmlukq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

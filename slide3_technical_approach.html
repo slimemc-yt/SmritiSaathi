@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIH Slide 3 - Technical Approach</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, "Segoe UI", Calibri, sans-serif;
+      background-color: #2b2b2b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* 16:9 Aspect Ratio Slide Container */
+    .slide-container {
+      width: 1280px;
+      height: 720px;
+      background-color: #ffffff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Header Bar */
+    .slide-header {
+      height: 90px;
+      padding: 12px 35px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #eaeaea;
+    }
+
+    .team-badge {
+      border: 2px solid #5b3e8c;
+      border-radius: 50px;
+      padding: 8px 18px;
+      font-size: 15px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .slide-title {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #000;
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    .sih-logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sih-logo-text {
+      text-align: left;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #223b54;
+      text-transform: uppercase;
+    }
+
+    .sih-logo-bulb {
+      width: 44px;
+      height: 44px;
+    }
+
+    /* Main Slide Body */
+    .slide-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      padding: 15px 30px;
+      gap: 20px;
+      position: relative;
+    }
+
+    /* Vertical dashed separator */
+    .vertical-divider {
+      position: absolute;
+      left: 405px;
+      top: 15px;
+      bottom: 25px;
+      width: 1px;
+      border-left: 2px dashed #d9776f;
+    }
+
+    /* Left Column: Tech Stack */
+    .tech-column {
+      padding-right: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+      font-family: Arial, sans-serif;
+    }
+
+    .tech-list {
+      list-style-type: disc;
+      padding-left: 18px;
+      font-size: 12.5px;
+      color: #222;
+      line-height: 1.35;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .tech-list li strong {
+      color: #000;
+      font-weight: 700;
+    }
+
+    /* Right Column: Flowchart & Links */
+    .flowchart-column {
+      padding-left: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .flowchart-title {
+      font-size: 19px;
+      font-weight: bold;
+      color: #1f4e79;
+      text-decoration: underline;
+      margin-bottom: 10px;
+    }
+
+    /* Diagram Grid / Canvas */
+    .diagram-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    /* 3-Role Top/Bottom/Side Cards */
+    .roles-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .diagram-card {
+      border: 1.5px solid #666;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 11.5px;
+      text-align: center;
+      background: #fdfdfd;
+      box-shadow: 1px 2px 4px rgba(0,0,0,0.08);
+      position: relative;
+    }
+
+    .card-patient {
+      background-color: #ffeedb;
+      border-color: #e67e22;
+    }
+
+    .card-caregiver {
+      background-color: #e8f4fd;
+      border-color: #2980b9;
+    }
+
+    .card-doctor {
+      background-color: #eafaf1;
+      border-color: #27ae60;
+    }
+
+    .card-firebase {
+      background-color: #fff8e1;
+      border-color: #f39c12;
+      border-width: 2px;
+    }
+
+    .card-gemini {
+      background-color: #f3e5f5;
+      border-color: #8e24aa;
+    }
+
+    .card-title {
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .card-desc {
+      font-size: 10.5px;
+      color: #444;
+      line-height: 1.2;
+    }
+
+    /* Middle Layer: Cloud Sync & AI */
+    .middle-row {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 14px;
+      margin: 4px 0;
+    }
+
+    /* Flow Connectors / Arrows */
+    .arrow-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+      color: #444;
+      text-align: center;
+    }
+
+    .arrow-badge {
+      background: #eee;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin: 2px 0;
+      font-size: 9.5px;
+    }
+
+    /* Bottom Info Row (Links & Status) */
+    .bottom-info-row {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .links-box {
+      background-color: #b9cde5;
+      border: 1.5px solid #8ba8cd;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .links-box a {
+      color: #0000ee;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .status-badge-box {
+      background-color: #dbe5f1;
+      border: 1.5px solid #95b3d7;
+      border-radius: 6px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .status-text {
+      color: #c00000;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    /* Bottom Blue Banner */
+    .slide-footer {
+      height: 32px;
+      background-color: #0b6cb4;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 25px;
+      font-size: 11px;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-center {
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-weight: bold;
+    }
+
+    /* Print & Controls */
+    .controls {
+      margin-top: 15px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 8px 18px;
+      background: #0b6cb4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .btn:hover {
+      background: #084c7e;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide 3 -->
+  <div class="slide-container" id="slide">
+    
+    <!-- Top Header -->
+    <div class="slide-header">
+      <div class="team-badge">
+        SmritiSaathi<br>Team
+      </div>
+      <div class="slide-title">
+        TECHNICAL APPROACH
+      </div>
+      <div class="sih-logo-area">
+        <!-- Student-style SVG SIH logo -->
+        <svg class="sih-logo-bulb" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="#223b54" stroke-width="2"/>
+          <path d="M35 35 Q50 15 65 35 Q60 55 55 60 L45 60 Q40 55 35 35 Z" fill="#f39c12"/>
+          <rect x="44" y="62" width="12" height="6" fill="#7f8c8d" rx="2"/>
+          <rect x="46" y="70" width="8" height="4" fill="#7f8c8d" rx="1"/>
+          <!-- Circuit dots -->
+          <circle cx="38" cy="40" r="3" fill="#27ae60"/>
+          <circle cx="62" cy="40" r="3" fill="#2980b9"/>
+          <path d="M38 40 L50 45 L62 40" stroke="#fff" stroke-width="1.5" fill="none"/>
+        </svg>
+        <div class="sih-logo-text">
+          SMART INDIA<br>HACKATHON<br><span style="color:#d9776f; font-size:14px;">2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Slide Body -->
+    <div class="slide-body">
+      
+      <!-- Vertical Dashed Separator -->
+      <div class="vertical-divider"></div>
+
+      <!-- Left Column: Technologies Used -->
+      <div class="tech-column">
+        <div class="section-title">Hardware & Software</div>
+        <ul class="tech-list">
+          <li>
+            <strong>Android 14 / Kotlin (Jetpack Compose):</strong> Native mobile client with Material 3, clean MVVM architecture, and accessible large touch targets (48–80dp+) designed specifically for elderly cognitive ergonomics.
+          </li>
+          <li>
+            <strong>Firebase Authentication:</strong> Google Sign-In for Caregivers & Doctors; zero-password 6-digit numeric anonymous pairing for Patients to eliminate login frustration.
+          </li>
+          <li>
+            <strong>Google Cloud Firestore:</strong> Real-time reactive snapshot synchronization (`Kotlin Flow`) for instant SOS distress alerts, daily medication tracking, and multi-user data sharing.
+          </li>
+          <li>
+            <strong>Google Gemini 1.5 Flash AI:</strong> Synthesizes gameplay telemetry to compute multi-domain cognitive scores (Memory, Attention, Speed) and generates dementia-safe dynamic routines.
+          </li>
+          <li>
+            <strong>Android On-Device TTS:</strong> Paced at 0.85x speed for gentle voice reminders and agitation de-escalation in 9 North East regional languages (Assamese, Bengali, Mizo, etc.).
+          </li>
+          <li>
+            <strong>Android Exact AlarmManager:</strong> Hardware-level reliable medication reminders that ring even when the app is closed or offline.
+          </li>
+          <li>
+            <strong>Jetpack DataStore:</strong> UID-scoped local storage ensuring fast offline boot (&lt;1s) and data privacy across shared family devices.
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right Column: Flowchart & Data Architecture -->
+      <div class="flowchart-column">
+        <div class="flowchart-title">FLOW CHART</div>
+        
+        <div class="diagram-area">
+          
+          <!-- Top Row: 3 Ecosystem Roles -->
+          <div class="roles-row">
+            
+            <!-- Patient App Box -->
+            <div class="diagram-card card-patient">
+              <span class="card-title" style="color:#b95e00;">👴 Patient Device (Tablet)</span>
+              <div class="card-desc">
+                • Zero-Password 6-Digit Pairing<br>
+                • 9 Cultural Brain Games<br>
+                • Daily Routine &amp; Reminders<br>
+                • One-Touch Distress / SOS<br>
+                • 0.85x TTS Voice Guidance
+              </div>
+            </div>
+
+            <!-- Caregiver App Box -->
+            <div class="diagram-card card-caregiver">
+              <span class="card-title" style="color:#1f618d;">👨‍👩‍👦 Family / Caregiver</span>
+              <div class="card-desc">
+                • 8-Step Patient Onboarding<br>
+                • Real-time Behavioral Alerts<br>
+                • Medication &amp; Routine Manager<br>
+                • Reminiscence Album Upload<br>
+                • "Play with Grandpa" Invites
+              </div>
+            </div>
+
+            <!-- Doctor Portal Box -->
+            <div class="diagram-card card-doctor">
+              <span class="card-title" style="color:#1e8449;">🩺 Doctor / Clinician</span>
+              <div class="card-desc">
+                • 3-Tier Clinical Triage<br>
+                • Longitudinal Cognitive Graphs<br>
+                • Medication Adherence %<br>
+                • Assign Cognitive Game Focus<br>
+                • Clinical Observation Notes
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Connecting Arrows (Roles to Cloud) -->
+          <div style="display: flex; justify-content: space-around; font-size: 11px; color: #555; font-weight: bold; margin: 2px 0;">
+            <span>⬇️ Game Telemetry / SOS</span>
+            <span>↕️ Live Sync &amp; Alerts</span>
+            <span>⬆️ Clinical Review &amp; Notes</span>
+          </div>
+
+          <!-- Middle Row: Cloud Backend & AI Engine -->
+          <div class="middle-row">
+            
+            <!-- Firebase Core Hub -->
+            <div class="diagram-card card-firebase" style="text-align: left; padding: 10px 14px;">
+              <span class="card-title" style="color:#b7791f; text-align: center;">🔥 Firebase Spark Cloud Backend (Free Tier)</span>
+              <div class="card-desc" style="font-size: 11px; line-height: 1.35;">
+                <strong>• Firebase Auth:</strong> Google OAuth 2.0 + Anonymous Device Tokens<br>
+                <strong>• Cloud Firestore DB:</strong> Real-time snapshot listeners for collections (`/patients`, `/gameResults`, `/behavioralAlerts`, `/clinicalNotes`)<br>
+                <strong>• Offline Fallback:</strong> On-device persistence + Jetpack DataStore cache
+              </div>
+            </div>
+
+            <!-- Gemini AI Engine -->
+            <div class="diagram-card card-gemini" style="text-align: left; padding: 10px 14px;">
+              <span class="card-title" style="color:#6a1b9a; text-align: center;">✨ Gemini 1.5 Flash AI</span>
+              <div class="card-desc" style="font-size: 11px; line-height: 1.35;">
+                <strong>• Cognitive Assessment:</strong> Scores Memory, Attention, Reaction Speed &amp; Problem Solving<br>
+                <strong>• Adaptive Routines:</strong> Generates tailored daily schedules by stage
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Flow Connection -->
+          <div style="text-align: center; font-size: 10.5px; color: #444; background: #f0f4f8; padding: 3px 8px; border-radius: 4px; border: 1px dashed #a0aec0;">
+            🔄 <strong>Closed-Loop Tri-Party Ecosystem:</strong> Real-time synchronization guarantees patients receive instant care, caregivers stay informed, and doctors track progression without manual overhead.
+          </div>
+
+          <!-- Bottom Row: GitHub Links & Status -->
+          <div class="bottom-info-row">
+            
+            <div class="links-box">
+              <div><strong>GitHub link:</strong> <a href="#">https://github.com/Aanshumaan/SmritiSaathi</a></div>
+              <div><strong>YouTube video:</strong> <a href="#">Link to 3-Min Prototype Demo</a></div>
+            </div>
+
+            <div class="status-badge-box">
+              <span class="status-text">Above 85% of the prototype is completed</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bottom SIH Footer Bar -->
+    <div class="slide-footer">
+      <div class="footer-left">
+        <span>🌐</span>
+        <span>SIH 2026</span>
+      </div>
+      <div class="footer-center">
+        @SIH Idea submission- Template
+      </div>
+      <div class="footer-right">
+        <span>3</span>
+        <span>💡 Epic</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Action buttons for user -->
+  <div class="controls">
+    <button class="btn" onclick="window.print()">🖨️ Save / Print as PDF</button>
+  </div>
+
+</body>
+</html>
